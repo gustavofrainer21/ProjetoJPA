@@ -1,0 +1,162 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                                                                           ║
+║                  🎓 PORTAL DE ESTÁGIOS - INÍCIO RÁPIDO                   ║
+║                                                                           ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+⚡ QUICK START (3 MINUTOS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1️⃣ TERMINAL 1 - Backend
+   
+   cd /workspaces/ProjetoJPA/estagio
+   ./mvnw spring-boot:run
+   
+   ✅ Aguarde: "Started EstagioApplication"
+   Backend rodando em: http://localhost:8080/api
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2️⃣ TERMINAL 2 - Frontend
+   
+   cd /workspaces/ProjetoJPA/estagio/frontend
+   npm install
+   npm run dev
+   
+   ✅ Aguarde: "ready started server on"
+   Frontend rodando em: http://localhost:3000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 ABRA NO NAVEGADOR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   http://localhost:3000
+   
+   ✅ Home page aparece
+   ✅ Clique em "Login"
+   ✅ Clique em "Cadastrar" para criar conta
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 CRIAR CONTA - ESTUDANTE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   Nome:     João Silva
+   Email:    joao@test.com
+   Telefone: 11999999999
+   CPF:      12345678901
+   Curso:    Engenharia de Software
+   Senha:    123456
+   
+   Clique: CADASTRAR
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔐 FAZER LOGIN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   URL: http://localhost:3000/login
+   
+   Tipo de Usuário: Estudante
+   Email: joao@test.com
+   Senha: 123456
+   
+   Clique: ENTRAR
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 TESTE A AVALIAÇÃO (Funcionalidade Inovadora)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   1. Você estará no Dashboard
+   2. Clique em: "Explorar Vagas"
+   3. Verá a listagem de vagas
+   4. Clique em: "Ver Detalhes e Avaliar" de uma vaga
+   5. Você verá:
+      - Detalhes completos da vaga
+      - Seção "Avaliações de Ex-Estagiários"
+      - Média de notas (se houver avaliações)
+      - Formulário para deixar sua avaliação
+   6. Selecione de 1 a 5 ⭐ (clique nas estrelas)
+   7. Digite um comentário (ex: "Excelente experiência!")
+   8. Clique: "Enviar Avaliação"
+   9. Sua avaliação aparecerá na lista!
+   10. Veja a média atualizar automaticamente
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🏢 TESTAR COMO EMPRESA (Opcional)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   1. Sair (clique em seu nome no Dashboard)
+   2. Ir para http://localhost:3000/register
+   3. Escolher: "Empresa"
+   4. Preencher dados:
+      
+      Nome:      Tech Solutions
+      Email:     empresa@test.com
+      Telefone:  1133333333
+      CNPJ:      12345678000100
+      Endereço:  Rua X, 123
+      Senha:     123456
+   
+   5. Cadastrar
+   6. Login com essas credenciais
+   7. No Dashboard da empresa:
+      - Clique em "Criar Vaga"
+      - Preencha dados da vaga
+      - Outros estudantes poderão avaliar!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 DOCUMENTAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   README_IMPLEMENTACAO.md
+   ↳ Documentação completa do projeto
+   
+   CHECKLIST_COMPLETO.md
+   ↳ Verificação de todos os requisitos
+   
+   GUIA_TESTE_RAPIDO.md
+   ↳ Passo a passo detalhado para testes
+   
+   VERIFICACAO_ARQUIVOS.md
+   ↳ Lista de todos os arquivos implementados
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🐛 PROBLEMAS?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Porta 8080 ou 3000 já em uso?
+   Mude em: application.properties (server.port=8081)
+   ou: package.json ("dev": "next dev -p 3001")
+
+❌ "Cannot find module react"?
+   npm install na pasta frontend
+
+❌ Token expirado?
+   Limpar localStorage e fazer login novamente
+
+❌ Vaga não aparece?
+   Criar via Backend API primeiro
+
+❌ Avaliação não salva?
+   Verificar console do navegador (F12)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ PRONTO!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Seu Portal de Estágios está rodando!
+
+✅ Backend em: http://localhost:8080/api
+✅ Frontend em: http://localhost:3000
+✅ Funcionalidade inovadora: Avaliações de vagas
+✅ Tudo documentado em português
+
+Aproveite! 🚀
+

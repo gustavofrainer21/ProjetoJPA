@@ -3,6 +3,7 @@
 // criptografia de senha.
 package br.mack.estagio.controllers;
 
+import br.mack.estagio.dto.CadastroEmpresaRequest;
 import br.mack.estagio.entities.Empresa;
 import br.mack.estagio.repositories.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/empresas")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EmpresaController {
 
     @Autowired
@@ -69,5 +71,23 @@ public class EmpresaController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         empresaRepository.deleteById(id);
+    }
+
+    // Endpoint de registro simplificado.
+    @PostMapping("/registro")
+    public Empresa register(@RequestBody CadastroEmpresaRequest request) {
+        if (empresaRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email já cadastrado");
+        }
+        
+        Empresa empresa = new Empresa();
+        empresa.setNome(request.getNome());
+        empresa.setCnpj(request.getCnpj());
+        empresa.setEmail(request.getEmail());
+        empresa.setTelefone(request.getTelefone());
+        empresa.setEndereco(request.getEndereco());
+        empresa.setSenha(passwordEncoder.encode(request.getSenha()));
+        
+        return empresaRepository.save(empresa);
     }
 }

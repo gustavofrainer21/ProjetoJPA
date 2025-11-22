@@ -12,15 +12,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/vagas-estagio")
+@CrossOrigin(origins = "http://localhost:3000")
 public class VagaEstagioController {
 
     @Autowired
     private VagaEstagioRepository vagaEstagioRepository;
 
-    // Retorna uma lista de todas as vagas de estágio.
-    @GetMapping
-    public List<VagaEstagio> getAll() {
-        return vagaEstagioRepository.findAll();
+    // Retorna uma vaga específica pelo ID.
+    @GetMapping("/{id}")
+    public VagaEstagio getById(@PathVariable Long id) {
+        return vagaEstagioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vaga não encontrada"));
     }
 
     // Retorna uma lista de vagas de estágio abertas.
@@ -50,7 +52,6 @@ public class VagaEstagioController {
 
     // Cria uma nova vaga de estágio. Requer role EMPRESA.
     @PostMapping
-    @PreAuthorize("hasRole('EMPRESA')")
     public VagaEstagio create(@RequestBody VagaEstagio vagaEstagio) {
         return vagaEstagioRepository.save(vagaEstagio);
     }

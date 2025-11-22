@@ -1,3 +1,11 @@
+/**
+ * Controller responsável pelos dashboards personalizados de cada tipo de usuário.
+ * 
+ * Funcionalidades:
+ * - Dashboard Admin: estatísticas gerais do portal
+ * - Dashboard Estudante: vagas relacionadas a suas áreas de interesse
+ * - Dashboard Empresa: vagas criadas e inscrições recebidas
+ */
 // Controller para dashboards personalizados.
 // Fornece estatísticas para admin, vagas para estudantes e inscrições para empresas.
 package br.mack.estagio.controllers;
@@ -26,6 +34,18 @@ public class DashboardController {
     @Autowired
     private InscricaoRepository inscricaoRepository;
 
+    /**
+     * Retorna estatísticas gerais do portal para o administrador.
+     * 
+     * Dados fornecidos:
+     * - Quantidade total de empresas cadastradas
+     * - Quantidade total de estudantes cadastrados
+     * - Quantidade de vagas abertas (ativas)
+     * - Quantidade de vagas encerradas
+     * - Distribuição de vagas por área de interesse
+     * 
+     * @return Map com estatísticas do portal
+     */
     // Retorna estatísticas gerais do portal para administradores. Requer role ADMIN.
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
@@ -39,6 +59,18 @@ public class DashboardController {
         return stats;
     }
 
+    /**
+     * Retorna as vagas abertas que correspondem às áreas de interesse do estudante.
+     * 
+     * Fluxo:
+     * 1. Busca estudante pelo ID
+     * 2. Obtém áreas de interesse do estudante
+     * 3. Lista vagas abertas nessas áreas
+     * 4. Ordena por ID decrescente (vagas mais recentes primeiro)
+     * 
+     * @param estudanteId ID do estudante logado
+     * @return Lista de vagas relacionadas às suas áreas
+     */
     // Retorna vagas abertas relacionadas às áreas de interesse do estudante.
     @GetMapping("/estudante/{estudanteId}")
     public List<VagaEstagio> getEstudanteDashboard(@PathVariable Long estudanteId) {
@@ -47,6 +79,17 @@ public class DashboardController {
                 .orElse(List.of());
     }
 
+    /**
+     * Retorna o dashboard da empresa com suas vagas e inscrições recebidas.
+     * 
+     * Dados fornecidos:
+     * - Todas as vagas criadas pela empresa (abertas e encerradas)
+     * - Mapa com inscrições agrupadas por vaga
+     * - Informações dos estudantes inscritos
+     * 
+     * @param empresaId ID da empresa logada
+     * @return Map contendo "vagas" e "inscricoesPorVaga"
+     */
     // Retorna vagas da empresa e inscrições por vaga para a empresa logada.
     @GetMapping("/empresa/{empresaId}")
     public Map<String, Object> getEmpresaDashboard(@PathVariable Long empresaId) {

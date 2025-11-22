@@ -3,6 +3,7 @@
 // criptografia de senha e funcionalidades de gamificação.
 package br.mack.estagio.controllers;
 
+import br.mack.estagio.dto.CadastroEstudanteRequest;
 import br.mack.estagio.entities.Estudante;
 import br.mack.estagio.repositories.EstudanteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/estudantes")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EstudanteController {
 
     @Autowired
@@ -39,6 +41,24 @@ public class EstudanteController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email já cadastrado.");
         }
         estudante.setSenha(passwordEncoder.encode(estudante.getSenha()));
+        return estudanteRepository.save(estudante);
+    }
+
+    // Endpoint de registro simplificado.
+    @PostMapping("/registro")
+    public Estudante register(@RequestBody CadastroEstudanteRequest request) {
+        if (estudanteRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email já cadastrado");
+        }
+        
+        Estudante estudante = new Estudante();
+        estudante.setNome(request.getNome());
+        estudante.setCpf(request.getCpf());
+        estudante.setCurso(request.getCurso());
+        estudante.setEmail(request.getEmail());
+        estudante.setTelefone(request.getTelefone());
+        estudante.setSenha(passwordEncoder.encode(request.getSenha()));
+        
         return estudanteRepository.save(estudante);
     }
 

@@ -19,7 +19,8 @@
     <description>Portal de Estágios - Backend Spring Boot</description>
     
     <properties>
-        <java.version>21</java.version>
+        <!-- Ajustado para compatibilidade com JDK disponível no container -->
+        <java.version>17</java.version>
     </properties>
     
     <dependencies>
@@ -74,6 +75,25 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
+        </dependency>
+        
+        <!-- JWT -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.12.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.12.3</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.12.3</version>
+            <scope>runtime</scope>
         </dependency>
         
         <!-- Spring Boot Test -->

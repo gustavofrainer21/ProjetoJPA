@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/inscricoes")
+@CrossOrigin(origins = "http://localhost:3000")
 public class InscricaoController {
 
     @Autowired
@@ -21,10 +22,16 @@ public class InscricaoController {
     @Autowired
     private br.mack.estagio.repositories.EstudanteRepository estudanteRepository;
 
-    // Retorna uma lista de todas as inscrições.
-    @GetMapping
-    public List<Inscricao> getAll() {
-        return inscricaoRepository.findAll();
+    // Retorna inscrições de um estudante específico.
+    @GetMapping("/estudante/{estudanteId}")
+    public List<Inscricao> getByEstudante(@PathVariable Long estudanteId) {
+        return inscricaoRepository.findByEstudanteId(estudanteId);
+    }
+
+    // Retorna inscrições de uma vaga específica.
+    @GetMapping("/vaga/{vagaId}")
+    public List<Inscricao> getByVaga(@PathVariable Long vagaId) {
+        return inscricaoRepository.findByVagaId(vagaId);
     }
 
     // Cria uma nova inscrição em uma vaga. Valida se a vaga está aberta, se o estudante já se inscreveu, e concede pontos/badges.

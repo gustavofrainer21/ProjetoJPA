@@ -2,6 +2,7 @@
 // Fornece endpoints para CRUD de administradores, incluindo criptografia de senha.
 package br.mack.estagio.controllers;
 
+import br.mack.estagio.dto.CadastroEmpresaRequest;
 import br.mack.estagio.entities.Administrador;
 import br.mack.estagio.repositories.AdministradorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/administradores")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AdministradorController {
 
     @Autowired
@@ -52,5 +54,15 @@ public class AdministradorController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         administradorRepository.deleteById(id);
+    }
+
+    // Endpoint de registro simplificado para admin.
+    @PostMapping("/registro")
+    public Administrador register(@RequestBody CadastroEmpresaRequest request) {
+        Administrador admin = new Administrador();
+        admin.setNome(request.getNome());
+        admin.setEmail(request.getEmail());
+        admin.setSenha(passwordEncoder.encode(request.getSenha()));
+        return administradorRepository.save(admin);
     }
 }
