@@ -51,16 +51,17 @@ export default function VagaDetalhePage() {
             try {
                 const userObj = JSON.parse(user);
                 
-                // Buscar vaga (seria ideal ter endpoint específico)
-                const response = await fetch(`http://localhost:8080/api/vagas-estagio/${vagaId}`, {
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                // Buscar vaga usando rewrite do Next.js (/api -> http://localhost:8080/api)
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/vagas-estagio/${vagaId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const vagaData = await response.json();
                 setVaga(vagaData);
 
                 // Buscar avaliações e estatísticas
-                const statsResponse = await fetch(`http://localhost:8080/api/avaliacoes/vaga/${vagaId}/estatisticas`, {
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                const statsResponse = await fetch(`/api/avaliacoes/vaga/${vagaId}/estatisticas`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const statsData = await statsResponse.json();
                 setAvaliacoes(statsData.avaliacoes);
@@ -82,11 +83,12 @@ export default function VagaDetalhePage() {
 
         try {
             const user = JSON.parse(localStorage.getItem('user') || '{}');
-            const response = await fetch('http://localhost:8080/api/avaliacoes', {
+            const token = localStorage.getItem('token');
+            const response = await fetch('/api/avaliacoes', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     estudante: { id: user.id },
@@ -100,8 +102,8 @@ export default function VagaDetalhePage() {
                 setNota(5);
                 setComentario('');
                 // Recarregar avaliações
-                const statsResponse = await fetch(`http://localhost:8080/api/avaliacoes/vaga/${vagaId}/estatisticas`, {
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                const statsResponse = await fetch(`/api/avaliacoes/vaga/${vagaId}/estatisticas`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
                 });
                 const statsData = await statsResponse.json();
                 setAvaliacoes(statsData.avaliacoes);

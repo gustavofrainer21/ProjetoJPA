@@ -31,6 +31,13 @@ public class EstudanteController {
         return estudanteRepository.findAll();
     }
 
+    // Retorna um estudante específico pelo ID.
+    @GetMapping("/{id}")
+    public Estudante getById(@PathVariable Long id) {
+        return estudanteRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Estudante não encontrado."));
+    }
+
     // Cria um novo estudante. Valida unicidade de CPF e email, criptografa a senha.
     @PostMapping
     public Estudante create(@RequestBody Estudante estudante) {
