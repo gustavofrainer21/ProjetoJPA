@@ -40,6 +40,9 @@ export default function VagaDetalhePage() {
     const [comentario, setComentario] = useState('');
     const [avaliando, setAvaliando] = useState(false);
 
+    const [jaInscrito, setJaInscrito] = useState(false);
+    const [inscrevendo, setInscrevendo] = useState(false);
+
     useEffect(() => {
         const user = localStorage.getItem('user');
         if (!user) {
@@ -66,6 +69,14 @@ export default function VagaDetalhePage() {
                 const statsData = await statsResponse.json();
                 setAvaliacoes(statsData.avaliacoes);
                 setMedia(statsData.mediaNotas || 0);
+
+                // Verificar se já está inscrito
+                const inscricoesResponse = await fetch(`/api/inscricoes/estudante/${userObj.id}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const inscricoes = await inscricoesResponse.json();
+                const jainscrito = inscricoes.some((insc: any) => insc.vaga.id === parseInt(vagaId));
+                setJaInscrito(jainscrito);
             } catch (err) {
                 setError('Erro ao carregar vaga');
                 console.error(err);
@@ -76,6 +87,43 @@ export default function VagaDetalhePage() {
 
         fetchVagaEAvaliacoes();
     }, [vagaId, router]);
+
+    const handleInscricao = async () => {
+        if (jaInscrito) {
+            alert('Você já está inscrito nesta vaga!');
+            return;
+        }
+
+        setInscrevendo(true);
+        try {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const token = localStorage.getItem('token');
+            const response = await fetch('/api/inscricoes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    estudante: { id: user.id },
+                    vaga: { id: parseInt(vagaId) }
+                })
+            });
+
+            if (response.ok) {
+                setJaInscrito(true);
+                alert('Inscrição realizada com sucesso! 🎉');
+            } else {
+                const errData = await response.json();
+                alert(`Erro ao se inscrever: ${errData.message || 'Tente novamente'}`);
+            }
+        } catch (err) {
+            alert('Erro ao se inscrever na vaga');
+            console.error(err);
+        } finally {
+            setInscrevendo(false);
+        }
+    };
 
     const handleAvaliacao = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -160,6 +208,22 @@ export default function VagaDetalhePage() {
                 <div className={styles.descricaoBox}>
                     <h3>Descrição</h3>
                     <p>{vaga.descricao || 'Sem descrição disponível'}</p>
+                </div>
+
+                <div className={styles.acaoBox}>
+                    {jaInscrito ? (
+                        <div className={styles.jaInscrito}>
+                            <p>✅ Você já está inscrito nesta vaga</p>
+                        </div>
+                    ) : (
+                        <button
+                            onClick={handleInscricao}
+                            disabled={inscrevendo}
+                            className={styles.inscreverBtn}
+                        >
+                            {inscrevendo ? 'Inscrevendo...' : '📝 Se Inscrever Nesta Vaga'}
+                        </button>
+                    )}
                 </div>
             </div>
 
