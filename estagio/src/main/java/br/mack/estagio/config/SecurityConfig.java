@@ -23,6 +23,7 @@ import java.util.Arrays;
  */
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     /**
@@ -51,15 +52,22 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(authz -> authz
+                // Endpoints públicos necessários para registro e login
                 .requestMatchers("/api/estudantes/registro").permitAll()
                 .requestMatchers("/api/empresas/registro").permitAll()
                 .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
-                .anyRequest().permitAll() // Temporariamente permitir tudo enquanto testa
+                // Em produção todos os outros endpoints devem requerer autenticação.
+                // Antes estávamos permitindo tudo temporariamente durante debugging,
+                // aqui reforçamos para `.authenticated()` para prevenir acessos não autorizados.
+                .anyRequest().authenticated()
             )
             .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
 
-        // Adiciona o filtro JWT para popular o SecurityContext a partir do header Authorization
+        // Adiciona o filtro JWT para popular o SecurityContext a partir do header Authorization.
+        // Observação: o filtro é registrado *antes* do UsernamePasswordAuthenticationFilter
+        // para garantir que, quando a cadeia de filtros fizer as verificações de autorização,
+        // o SecurityContext já contenha a Authentication derivada do token JWT.
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

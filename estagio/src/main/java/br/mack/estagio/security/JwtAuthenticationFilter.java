@@ -37,6 +37,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
             try {
+                // Valida o token e popula a Authentication com a role encontrada.
+                // Observações importantes:
+                // - O token deve ser validado (assinatura + expiração) pelo JwtProvider.
+                // - O claim "role" é convertido para uma autoridade com prefixo "ROLE_"
+                //   para que o Spring Security possa avaliar `hasRole('EMPRESA')` etc.
+                // - Caso o token seja inválido, não lançamos exceção aqui: apenas
+                //   não autênticamos a requisição (segue como anonymous) e deixamos
+                //   o fluxo de autorização lidar com a falta de Authentication.
                 if (jwtProvider.validateToken(token)) {
                     String role = jwtProvider.getRoleFromToken(token);
                     if (role != null) {
@@ -48,7 +56,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     }
                 }
             } catch (Exception ex) {
-                // Em caso de token inválido, não autentica — segue como anonymous
+                // Em caso de token inválido, não autentica — segue como anonymous.
+                // Se necessário, aqui poderíamos registrar detalhes para auditoria, mas
+                // evitamos expor informações sensíveis nos logs.
             }
         }
 
