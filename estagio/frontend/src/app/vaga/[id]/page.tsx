@@ -127,29 +127,39 @@ export default function VagaDetalhePage() {
             <Link href="/vagas" className={styles.backBtn}>← Voltar para Vagas</Link>
 
             <div className={styles.vagaDetalhes}>
-                <h1 className={styles.titulo}>{vaga.titulo}</h1>
-                <div className={styles.empresa}>
-                    <strong>Empresa:</strong> {vaga.empresa.nome}
-                </div>
+                <h1 className={styles.titulo}>{vaga.titulo || 'Vaga sem título'}</h1>
+                {vaga.empresa && (
+                    <div className={styles.empresa}>
+                        <strong>Empresa:</strong> {vaga.empresa.nome}
+                    </div>
+                )}
 
                 <div className={styles.infoGrid}>
-                    <div className={styles.infoItem}>
-                        <strong>📍 Local:</strong> {vaga.localizacao}
-                    </div>
-                    <div className={styles.infoItem}>
-                        <strong>🏢 Modalidade:</strong> {vaga.modalidade}
-                    </div>
-                    <div className={styles.infoItem}>
-                        <strong>⏰ Carga Horária:</strong> {vaga.cargaHoraria}h/semana
-                    </div>
-                    <div className={styles.infoItem}>
-                        <strong>📋 Requisitos:</strong> {vaga.requisitos}
-                    </div>
+                    {vaga.localizacao && (
+                        <div className={styles.infoItem}>
+                            <strong>📍 Local:</strong> {vaga.localizacao}
+                        </div>
+                    )}
+                    {vaga.modalidade && (
+                        <div className={styles.infoItem}>
+                            <strong>🏢 Modalidade:</strong> {vaga.modalidade}
+                        </div>
+                    )}
+                    {vaga.cargaHoraria > 0 && (
+                        <div className={styles.infoItem}>
+                            <strong>⏰ Carga Horária:</strong> {vaga.cargaHoraria}h/semana
+                        </div>
+                    )}
+                    {vaga.requisitos && (
+                        <div className={styles.infoItem}>
+                            <strong>📋 Requisitos:</strong> {vaga.requisitos}
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.descricaoBox}>
                     <h3>Descrição</h3>
-                    <p>{vaga.descricao}</p>
+                    <p>{vaga.descricao || 'Sem descrição disponível'}</p>
                 </div>
             </div>
 
