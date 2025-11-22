@@ -105,7 +105,7 @@ export default function DashboardPage() {
 
                         <Link href="/meu-perfil-empresa" className={styles.optionCard}>
                             <div className={styles.icon}>🏢</div>
-                            <h3>Meu Perfil</h3>
+                            <h3>Perfil da Empresa</h3>
                             <p>Edite informações da empresa</p>
                         </Link>
                     </div>
