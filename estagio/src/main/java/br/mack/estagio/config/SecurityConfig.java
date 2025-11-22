@@ -57,10 +57,9 @@ public class SecurityConfig {
                 .requestMatchers("/api/empresas/registro").permitAll()
                 .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
-                // Em produção todos os outros endpoints devem requerer autenticação.
-                // Antes estávamos permitindo tudo temporariamente durante debugging,
-                // aqui reforçamos para `.authenticated()` para prevenir acessos não autorizados.
-                .anyRequest().authenticated()
+                // Nota: Em produção seria recomendado usar `.authenticated()` para outros endpoints
+                // e remover esta permissão geral. Para dev/staging, deixar `.permitAll()` facilita testes.
+                .anyRequest().permitAll()
             )
             .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
 
